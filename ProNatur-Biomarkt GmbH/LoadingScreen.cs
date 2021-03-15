@@ -26,7 +26,6 @@ namespace ProNatur_Biomarkt_GmbH
 
         private void loadingbarTimer_Tick(object sender, EventArgs e)
         {
-
             loadingBarValue += 1;           
 
             lblLoadingProgress.Text = loadingBarValue.ToString() + "%";
@@ -36,7 +35,11 @@ namespace ProNatur_Biomarkt_GmbH
             {
                 loadingbarTimer.Stop();
 
-                // Finish loading
+                // Finish loading show main menu screen
+                MainMenuScreen mainMenuScreen = new MainMenuScreen();
+                mainMenuScreen.Show();
+
+                this.Hide();
             }
         }
 
