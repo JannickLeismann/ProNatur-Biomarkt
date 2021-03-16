@@ -16,5 +16,13 @@ namespace ProNatur_Biomarkt_GmbH
         {
             InitializeComponent();
         }
+
+        private void btnProducts_Click(object sender, EventArgs e)
+        {
+            ProductsScreen productsScreen = new ProductsScreen();
+            productsScreen.Show();
+
+            this.Hide();
+        }
     }
 }
