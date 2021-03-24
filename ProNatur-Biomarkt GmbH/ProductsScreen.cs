@@ -19,7 +19,55 @@ namespace ProNatur_Biomarkt_GmbH
         {
             InitializeComponent();
 
-            // Start
+            ShowProducts();
+        }
+
+        private void btnProductSave_Click(object sender, EventArgs e)
+        {
+
+            if(textBoxProductName.Text == "" 
+                || textBoxProductBrand.Text == ""
+                || comboBoxProductCategory.Text == ""
+                || textBoxProductPrice.Text == "")
+            {
+                MessageBox.Show("Bitte fülle alle Werte aus.");
+
+                return;
+            }
+
+            // save product name in database
+            string productName = textBoxProductName.Text;
+            string productBrand = textBoxProductBrand.Text;
+            string productCategory = comboBoxProductCategory.Text;
+            string productPrice = textBoxProductPrice.Text;
+
+            databaseConnection.Open();
+            string query = string.Format("insert into Products values('{0}', '{1}', '{2}', '{3}')", productName, productBrand, productCategory, productPrice);
+            SqlCommand sqlCommand = new SqlCommand(query, databaseConnection);
+            sqlCommand.ExecuteNonQuery();
+            databaseConnection.Close();
+    
+            ClearAllFields();
+            ShowProducts();
+        }
+
+        private void btnProductEdit_Click(object sender, EventArgs e)
+        {
+            ShowProducts();
+        }
+
+        private void btnProductClear_Click(object sender, EventArgs e)
+        {
+            ClearAllFields();
+        }
+
+        private void btnProductDelete_Click(object sender, EventArgs e)
+        {
+            ShowProducts();
+        }
+
+        private void ShowProducts()
+        {
             databaseConnection.Open();
 
             string query = "select * from Products";
@@ -33,29 +81,15 @@ namespace ProNatur_Biomarkt_GmbH
             productsDGV.Columns[0].Visible = false;
 
             databaseConnection.Close();
-
         }
 
-        private void btnProductSave_Click(object sender, EventArgs e)
+        private void ClearAllFields()
         {
-            string productName = textBoxProductName.Text;
-
-            // save product name in database        
-        }
-
-        private void btnProductEdit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnProductClear_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnProductDelete_Click(object sender, EventArgs e)
-        {
-
+            textBoxProductName.Text = "";
+            textBoxProductBrand.Text = "";
+            textBoxProductPrice.Text = "";
+            comboBoxProductCategory.Text = "";
+            comboBoxProductCategory.SelectedItem = null;
         }
     }
 }
